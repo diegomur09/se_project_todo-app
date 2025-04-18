@@ -14,15 +14,14 @@ const todosList = document.querySelector(".todos__list");
 
 const addTodoPopup = new PopupWithForm({
   popupSelector: "#add-todo-popup",
-  handleFormSubmit: () => {
-    console.log("in index.js");
+  handleFormSubmit: (evt) => {
     //TODO- move code from existing submition handeler to here
     console.log(evt.target.name.value);
     console.log(evt.target.date.value);
   },
 });
 
-addTodoPopup.setEventListener();
+addTodoPopup.setEventListeners();
 
 const generateTodo = (data) => {
   const todo = new Todo(data, "#todo-template");
