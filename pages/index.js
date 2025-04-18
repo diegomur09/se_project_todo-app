@@ -14,10 +14,18 @@ const todosList = document.querySelector(".todos__list");
 
 const addTodoPopup = new PopupWithForm({
   popupSelector: "#add-todo-popup",
-  handleFormSubmit: (evt) => {
-    //TODO- move code from existing submition handeler to here
-    console.log(evt.target.name.value);
-    console.log(evt.target.date.value);
+  handleFormSubmit: (inputValues) => {
+    const name = inputValues.name;
+    const dateInput = inputValues.date;
+
+    const date = new Date(dateInput);
+    date.setMinutes(date.getMinutes() + date.getTimezoneOffset());
+
+    const id = uuidv4();
+    const values = { name, date, id };
+    const todoElement = generateTodo(values);
+    section.addItem(todoElement);
+    addTodoPopup.close();
   },
 });
 
@@ -28,16 +36,12 @@ const generateTodo = (data) => {
   return todo.getView();
 };
 const section = new Section({
-  items: initialTodos, //pass initials todos
+  items: initialTodos,
   render: (item) => generateTodo(item),
-  //generate todo item
-  // add it todo list
-  //refer to the forEach loop in this file,
   containerSelector: ".todos__list",
 });
 
 section.renderItems();
-//call section instances's render items method
 
 /**const openModal = (modal) => {
   modal.classList.add("popup_visible");
